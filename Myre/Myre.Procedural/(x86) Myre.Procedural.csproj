@@ -92,8 +92,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Observer.cs" />
+    <Compile Include="Procedural.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Myre.Entities\%28x86%29 Myre.Entities.csproj">
+      <Project>{5CDABE8C-7C9C-4163-8C85-FEA731088239}</Project>
+      <Name>%28x86%29 Myre.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Myre\%28x86%29 Myre.csproj">
+      <Project>{FDB5A9D8-9266-4F7B-BDE7-D4E720F5B45F}</Project>
+      <Name>%28x86%29 Myre</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
