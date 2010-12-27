@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Myre.Entities.Services;
 using Myre.Entities;
 using Myre.Entities.Behaviours;
+using Myre.Collections;
 
 namespace Myre.Procedural
 {
@@ -21,22 +22,49 @@ namespace Myre.Procedural
         :Service, IBehaviourManager<Observer>
         where N : ISceneNode
     {
+        private NComparer comparer = new NComparer();
+        private MinMaxHeap<N> heap;
+
         public readonly N SceneRoot;
 
         private List<Observer> observers = new List<Observer>();
+        public IEnumerable<Observer> Observers
+        {
+            get
+            {
+                return observers;
+            }
+        }
 
         public Procedural(Scene scene, N root)
         {
+            this.heap = new MinMaxHeap<N>(comparer);
+
             this.SceneRoot = root;
+            heap.Add(SceneRoot);
+        }
+
+        public void AddNode(N node)
+        {
+            heap.Add(node);
+        }
+
+        public void RemoveNode(N Node)
+        {
+            heap.Remove(Node);
         }
 
         public override void Update(float elapsedTime)
         {
+            comparer.FrameNumber++;
+
             foreach (var observer in observers)
             {
                 if (observer.Changed)
                 {
-                    throw new NotImplementedException("Begin updating the scene to reflect this change");
+                    observer.Changed = false;
+
+                    throw new NotImplementedException();
                 }
             }
 
@@ -54,5 +82,16 @@ namespace Myre.Procedural
             return observers.Remove(behaviour);
         }
         #endregion
+
+        private class NComparer
+            :IComparer<N>
+        {
+            public int FrameNumber;
+
+            public int Compare(N x, N y)
+            {
+                return x.GetImportance(FrameNumber).CompareTo(y.GetImportance(FrameNumber));
+            }
+        }
     }
 }

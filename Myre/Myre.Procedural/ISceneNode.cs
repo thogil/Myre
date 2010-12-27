@@ -11,6 +11,10 @@ namespace Myre.Procedural
     /// </summary>
     public interface ISceneNode
     {
+        float GetImportance(int frameNumber);
+
+        void AddToImportance(float delta, int frameNumber);
+
         /// <summary>
         /// Gets the parent of this node. Or null if this is the root
         /// </summary>
@@ -21,12 +25,12 @@ namespace Myre.Procedural
         }
 
         /// <summary>
-        /// Produce child nodes for this node. All the children must be contained within the bounds of this node
+        /// Add child entities to scene, Produce child nodes for this node. All the children must be contained within the bounds of this node
         /// </summary>
         void Develop(Scene scene);
 
         /// <summary>
-        /// Remove child nodes for this node
+        /// Remove child nodes and child entities for this node
         /// </summary>
         void Diminish(Scene scene);
 
@@ -45,6 +49,15 @@ namespace Myre.Procedural
         /// <value>The children.</value>
         /// <exception cref="InvalidOperationException">Thrown if this node has not been developed</exception>
         IEnumerable<ISceneNode> Children
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Get the entities created by this node
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown if this node has not been developed</exception>
+        IEnumerable<Entity> Entities
         {
             get;
         }
