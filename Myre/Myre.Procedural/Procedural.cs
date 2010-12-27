@@ -17,19 +17,17 @@ namespace Myre.Procedural
     /// <summary>
     /// A service which automatically creates and destroys entities in a scene
     /// </summary>
-    public class Procedural
+    public class Procedural<N>
         :Service, IBehaviourManager<Observer>
+        where N : ISceneNode
     {
+        public readonly N SceneRoot;
+
         private List<Observer> observers = new List<Observer>();
 
-        public Procedural(Scene scene)
+        public Procedural(Scene scene, N root)
         {
-
-        }
-
-        public void AddObserver()
-        {
-
+            this.SceneRoot = root;
         }
 
         public override void Update(float elapsedTime)
@@ -45,6 +43,7 @@ namespace Myre.Procedural
             base.Update(elapsedTime);
         }
 
+        #region behaviour manager
         public void Add(Observer behaviour)
         {
             observers.Add(behaviour);
@@ -54,5 +53,6 @@ namespace Myre.Procedural
         {
             return observers.Remove(behaviour);
         }
+        #endregion
     }
 }

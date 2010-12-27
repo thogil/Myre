@@ -40,8 +40,18 @@
     <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
-  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Myre.Entities\%28360%29 Myre.Entities.csproj">
+      <Project>{AFCBCBDD-FD5A-4627-B645-E74BE8DD259A}</Project>
+      <Name>%28360%29 Myre.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Myre\%28360%29 Myre.csproj">
+      <Project>{D8692844-58C6-477A-B85F-20A08B6E191B}</Project>
+      <Name>%28360%29 Myre</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ISceneNode.cs" />
     <Compile Include="Observer.cs" />
     <Compile Include="Procedural.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

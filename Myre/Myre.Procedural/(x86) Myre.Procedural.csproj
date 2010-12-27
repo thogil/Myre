@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISceneNode.cs" />
     <Compile Include="Observer.cs" />
     <Compile Include="Procedural.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
