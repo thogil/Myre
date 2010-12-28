@@ -19,16 +19,36 @@ namespace Myre.Procedural
     /// A service which automatically creates and destroys entities in a scene
     /// </summary>
     public class Procedural<N>
-        :Service, IBehaviourManager<Observer>
+        :Service, IBehaviourManager<Observer<N>>
         where N : ISceneNode
     {
         private NComparer comparer = new NComparer();
-        private MinMaxHeap<N> heap;
+        private List<N> nodes;
+        public IEnumerable<N> Nodes
+        {
+            get
+            {
+                return nodes;
+            }
+        }
+
+        private int capacity;
+        public int Capacity
+        {
+            get
+            {
+                return capacity;
+            }
+            set
+            {
+                capacity = value;
+            }
+        }
 
         public readonly N SceneRoot;
 
-        private List<Observer> observers = new List<Observer>();
-        public IEnumerable<Observer> Observers
+        private List<Observer<N>> observers = new List<Observer<N>>();
+        public IEnumerable<Observer<N>> Observers
         {
             get
             {
@@ -36,48 +56,125 @@ namespace Myre.Procedural
             }
         }
 
+        private HashSet<N> dimishing = new HashSet<N>();
+        private int diminishQueueLength
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private HashSet<N> developing = new HashSet<N>();
+        private int developQueueLength
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public Procedural(Scene scene, N root)
         {
-            this.heap = new MinMaxHeap<N>(comparer);
+            this.nodes = new List<N>();
 
             this.SceneRoot = root;
-            heap.Add(SceneRoot);
+            nodes.Add(SceneRoot);
         }
 
         public void AddNode(N node)
         {
-            heap.Add(node);
+            nodes.Add(node);
         }
 
         public void RemoveNode(N Node)
         {
-            heap.Remove(Node);
+            nodes.Remove(Node);
         }
 
         public override void Update(float elapsedTime)
         {
             comparer.FrameNumber++;
 
-            foreach (var observer in observers)
-            {
-                if (observer.Changed)
-                {
-                    observer.Changed = false;
+            SortNodes();
 
-                    throw new NotImplementedException();
+            if (nodes.Count < Capacity && developQueueLength == 0)
+            {
+                for (int i = nodes.Count - 1; i >= 0; i--)
+                {
+                    var n = nodes[i];
+                    if (!n.Developed)
+                        QueueDevelop(n);
                 }
             }
+            else
+            {
+                for (int i = nodes.Count - 1; i >= 0; i--)
+                {
+                    bool developed = false;
+                    var n = nodes[i];
+                    if (!n.Developed || developing.Contains(n))
+                    {
+                        for (int j = 0; j < i; j++)
+                        {
+                            var d = nodes[j];
+                            if (d.Developed && !dimishing.Contains(d))
+                            {
+                                QueueDiminish(d);
+                                QueueDevelop(n);
+                                developed = true;
+                            }
+                        }
+                    }
+
+                    if (!developed)
+                        break;
+                }
+            }
+
+            ApplyQueuedUpdates();
 
             base.Update(elapsedTime);
         }
 
+        private void SortNodes()
+        {
+            foreach (var observer in observers)
+            {
+                foreach (var node in nodes)
+                {
+                    float rating = observer.Rate(node);
+                    node.AddToImportance(rating, comparer.FrameNumber);
+                }
+            }
+
+            nodes.Sort(comparer);
+        }
+
+        private void ApplyQueuedUpdates()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void QueueDevelop(N node)
+        {
+            developing.Add(node);
+            throw new NotImplementedException();
+        }
+
+        private void QueueDiminish(N node)
+        {
+            dimishing.Add(node);
+            throw new NotImplementedException();
+        }
+
         #region behaviour manager
-        public void Add(Observer behaviour)
+        public void Add(Observer<N> behaviour)
         {
             observers.Add(behaviour);
         }
 
-        public bool Remove(Observer behaviour)
+        public bool Remove(Observer<N> behaviour)
         {
             return observers.Remove(behaviour);
         }

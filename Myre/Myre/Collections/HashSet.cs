@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Myre.Collections
 {
-    #if XBOX
+    #if !WINDOWS
     //todo: Make the compact framework hashset a proper hashset instead of a list in disguise
     public class HashSet<T>
          : ICollection<T>, IEnumerable<T>

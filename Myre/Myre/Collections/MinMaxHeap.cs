@@ -245,6 +245,16 @@ namespace Myre.Collections
         }
 
         /// <summary>
+        /// Removes an item from an unordered heap (faster than calling heapify and then removing it)
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
+        public bool RemoveUnordered(T item)
+        {
+            return heap.Remove(item);
+        }
+
+        /// <summary>
         /// Removes several nodes from the maximum end of the heap
         /// </summary>
         /// <param name="count">The count.</param>
