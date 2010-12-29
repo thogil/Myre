@@ -9,7 +9,8 @@ namespace Myre.Procedural
     /// <summary>
     /// A node encompassing a portion of space within a scene which can be developed into a set of smaller (non overlapping) child nodes
     /// </summary>
-    public interface ISceneNode
+    public interface ISceneNode<N>
+        where N : ISceneNode<N>
     {
         float GetImportance(int frameNumber);
 
@@ -19,7 +20,7 @@ namespace Myre.Procedural
         /// Gets the parent of this node. Or null if this is the root
         /// </summary>
         /// <value>The parent.</value>
-        ISceneNode Parent
+        N Parent
         {
             get;
         }
@@ -48,7 +49,7 @@ namespace Myre.Procedural
         /// </summary>
         /// <value>The children.</value>
         /// <exception cref="InvalidOperationException">Thrown if this node has not been developed</exception>
-        IEnumerable<ISceneNode> Children
+        IEnumerable<N> Children
         {
             get;
         }

@@ -96,6 +96,7 @@
     <Compile Include="Observer.cs" />
     <Compile Include="Procedural.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SynchronousExecutor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Myre.Entities\%28x86%29 Myre.Entities.csproj">

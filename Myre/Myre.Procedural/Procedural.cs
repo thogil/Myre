@@ -20,8 +20,9 @@ namespace Myre.Procedural
     /// </summary>
     public class Procedural<N>
         :Service, IBehaviourManager<Observer<N>>
-        where N : ISceneNode
+        where N : ISceneNode<N>
     {
+        #region fields
         private NComparer comparer = new NComparer();
         private List<N> nodes;
         public IEnumerable<N> Nodes
@@ -56,31 +57,27 @@ namespace Myre.Procedural
             }
         }
 
-        private HashSet<N> dimishing = new HashSet<N>();
-        private int diminishQueueLength
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public readonly Scene Scene;
 
-        private HashSet<N> developing = new HashSet<N>();
-        private int developQueueLength
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        private ITaskExecutor executor;
+        #endregion
 
+        #region constructors
         public Procedural(Scene scene, N root)
+            :this(scene, root, new SynchronousExecutor<N>())
         {
+        }
+
+        public Procedural(Scene scene, N root, ITaskExecutor executor)
+        {
+            this.executor = executor;
             this.nodes = new List<N>();
+            this.Scene = scene;
 
             this.SceneRoot = root;
             nodes.Add(SceneRoot);
         }
+        #endregion
 
         public void AddNode(N node)
         {
@@ -98,43 +95,40 @@ namespace Myre.Procedural
 
             SortNodes();
 
-            if (nodes.Count < Capacity && developQueueLength == 0)
-            {
-                for (int i = nodes.Count - 1; i >= 0; i--)
-                {
-                    var n = nodes[i];
-                    if (!n.Developed)
-                        QueueDevelop(n);
-                }
-            }
-            else
-            {
-                for (int i = nodes.Count - 1; i >= 0; i--)
-                {
-                    bool developed = false;
-                    var n = nodes[i];
-                    if (!n.Developed || developing.Contains(n))
-                    {
-                        for (int j = 0; j < i; j++)
-                        {
-                            var d = nodes[j];
-                            if (d.Developed && !dimishing.Contains(d))
-                            {
-                                QueueDiminish(d);
-                                QueueDevelop(n);
-                                developed = true;
-                            }
-                        }
-                    }
+            if (nodes.Count < Capacity)
+                UnderCapacity();
+            else if (nodes.Count > Capacity)
+                OverCapacity();
 
-                    if (!developed)
-                        break;
-                }
-            }
-
-            ApplyQueuedUpdates();
+            executor.ApplyQueuedUpdates(Scene, this);
 
             base.Update(elapsedTime);
+        }
+
+        private void OverCapacity()
+        {
+            if (executor.DiminishCount == 0)
+            {
+                for (int i = 0; i < nodes.Count && (executor.DiminishCount + nodes.Count) > Capacity; i++)
+                {
+                    var n = nodes[i];
+                    if (n.Developed && !executor.IsDiminishing(n))
+                        executor.QueueDiminish(n);
+                }
+            }
+        }
+
+        private void UnderCapacity()
+        {
+            if (executor.DevelopCount == 0)
+            {
+                for (int i = nodes.Count - 1; i >= 0 && (executor.DevelopCount + nodes.Count) < Capacity; i--)
+                {
+                    var n = nodes[i];
+                    if (!n.Developed && !executor.IsDeveloping(n))
+                        executor.QueueDevelop(n);
+                }
+            }
         }
 
         private void SortNodes()
@@ -149,23 +143,6 @@ namespace Myre.Procedural
             }
 
             nodes.Sort(comparer);
-        }
-
-        private void ApplyQueuedUpdates()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void QueueDevelop(N node)
-        {
-            developing.Add(node);
-            throw new NotImplementedException();
-        }
-
-        private void QueueDiminish(N node)
-        {
-            dimishing.Add(node);
-            throw new NotImplementedException();
         }
 
         #region behaviour manager
@@ -189,6 +166,29 @@ namespace Myre.Procedural
             {
                 return x.GetImportance(FrameNumber).CompareTo(y.GetImportance(FrameNumber));
             }
+        }
+
+        public interface ITaskExecutor
+        {
+            int DevelopCount
+            {
+                get;
+            }
+
+            int DiminishCount
+            {
+                get;
+            }
+
+            void QueueDevelop(N node);
+
+            bool IsDeveloping(N node);
+
+            void QueueDiminish(N node);
+
+            bool IsDiminishing(N node);
+
+            void ApplyQueuedUpdates(Scene scene, Procedural<N> manager);
         }
     }
 }
