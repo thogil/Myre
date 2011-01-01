@@ -1,0 +1,871 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Myre</name>
+    </assembly>
+    <members>
+        <member name="T:Myre.Extensions.StringExtensions">
+            <summary>
+            A static class containing extension methods for the System.String class.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.StringExtensions.TryToByte(System.String,System.Byte@)">
+            <summary>
+            Tries to convert this string into a byte.
+            </summary>
+            <param name="value">The string to convert.</param>
+            <param name="result">The parsed byte.</param>
+            <returns><c>true</c> if the parse succeeded; else <c>false</c>.</returns>
+        </member>
+        <member name="M:Myre.Extensions.StringExtensions.TryToInt(System.String,System.Int32@)">
+            <summary>
+            Tries to convert this string into an int.
+            </summary>
+            <param name="value">The string to convert.</param>
+            <param name="result">The parsed int.</param>
+            <returns><c>true</c> if the parse succeeded; else <c>false</c>.</returns>
+        </member>
+        <member name="M:Myre.Extensions.StringExtensions.TryToBool(System.String,System.Boolean@)">
+            <summary>
+            Tries to convert this string into a bool.
+            </summary>
+            <param name="value">The string to convert.</param>
+            <param name="result">The parsed bool.</param>
+            <returns><c>true</c> if the parse succeeded; else <c>false</c>.</returns>
+        </member>
+        <member name="M:Myre.Extensions.StringExtensions.TryToFloat(System.String,System.Single@)">
+            <summary>
+            Tries to convert this string into a float.
+            </summary>
+            <param name="value">The string to convert.</param>
+            <param name="result">The parsed float.</param>
+            <returns><c>true</c> if the parse succeeded; else <c>false</c>.</returns>
+        </member>
+        <member name="M:Myre.Extensions.StringExtensions.SplitKeepDelimiters(System.String,System.Char[])">
+            <summary>
+            Splits this string, while keeping delimiters.
+            </summary>
+            <param name="s"></param>
+            <param name="delimiters">The delimiters around which to split.</param>
+            <returns>A list of the split string parts.</returns>
+        </member>
+        <member name="T:Myre.IRecycleable">
+            <summary>
+            An object which can have its instances recycled, or reset.
+            </summary>
+        </member>
+        <member name="M:Myre.IRecycleable.Recycle">
+            <summary>
+            Prepares this instance for re-use.
+            </summary>
+        </member>
+        <member name="T:Myre.Extensions.Vector2Extensions">
+            <summary>
+            A static class which contains extension methods for the Vector2 class.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.Vector2Extensions.IsNaN(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Determines whether this Vector2 contains any components which are not a number.
+            </summary>
+            <param name="v"></param>
+            <returns>
+            	<c>true</c> if either X or Y are NaN; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Myre.Extensions.Vector2Extensions.Perpendicular(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Creates a vector perpendicular to this vector.
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Myre.Extensions.Vector2Extensions.Cross(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Calculates the perpendicular dot product of this vector and another.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Myre.Extensions.GraphicsDeviceExtensions">
+            <summary>
+            A static class containing extension methods for the Microsoft.Xna.Framework.Graphics.GraphicsDevice class.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.GraphicsDeviceExtensions.CalculateHalfPixel(Microsoft.Xna.Framework.Graphics.GraphicsDevice)">
+            <summary>
+            Calculates half the size of a pixel.
+            </summary>
+            <returns>Half the size of a pixel</returns>
+        </member>
+        <member name="M:Myre.Extensions.GraphicsDeviceExtensions.GetResolution(Microsoft.Xna.Framework.Graphics.GraphicsDevice)">
+            <summary>
+            Gets the resolution of the currently set render target or back buffer.
+            </summary>
+            <returns>The resolution of the currently set render target or back buffer.</returns>
+        </member>
+        <member name="M:Myre.Extensions.GraphicsDeviceExtensions.ClearDepth(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.Int32)">
+            <summary>
+            Clears the depth buffer.
+            </summary>
+            <param name="device">The graphics device to clear.</param>
+            <param name="depth">The depth to clear the depth buffer to.</param>
+        </member>
+        <member name="T:Myre.PulserType">
+            <summary>
+            Specifies the type of timing a pulsor uses.
+            </summary>
+        </member>
+        <member name="F:Myre.PulserType.Simple">
+            <summary>
+            If more time has elapsed than the threashold since the last pulse, then the pulsor pulses and then resets the timer.
+            </summary>
+        </member>
+        <member name="F:Myre.PulserType.Reliable">
+            <summary>
+            The pulsor will ensure that it pulses the correct number of times in a perticular time interval.
+            e.g. If the pulsor has a frequency of 30Hz, and it is not updated for 0.5 seconds, then its next update will pulse 15 times.
+            </summary>
+        </member>
+        <member name="F:Myre.PulserType.SquareWave">
+            <summary>
+            Same as reliable, except that the pulsor toggles between on and off at each 'pulse'.
+            </summary>
+        </member>
+        <member name="T:Myre.Pulser">
+            <summary>
+            A class which implements a repeated timed event.
+            </summary>
+        </member>
+        <member name="M:Myre.Pulser.#ctor(Myre.PulserType,System.TimeSpan)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Pulser"/> class.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="frequency">The frequency.</param>
+        </member>
+        <member name="M:Myre.Pulser.#ctor(Myre.PulserType,System.TimeSpan,System.TimeSpan)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Pulser"/> class.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="frequency">The frequency. This is the rate at which this instances pulses, after Delay has passed.</param>
+            <param name="delay">The delay. This is the time after the pulsor is started or restarted, before it begins pulsing.</param>
+        </member>
+        <member name="M:Myre.Pulser.#ctor(Myre.PulserType,System.TimeSpan,System.TimeSpan,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Pulser"/> class.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="frequency">The frequency. This is the rate at which this instances pulses, after Delay has passed.</param>
+            <param name="delay">The delay. This is the time after the pulsor is started or restarted, before it begins pulsing.</param>
+            <param name="initialState">if set to <c>true</c> IsSignalled will initially be <c>true</c>.</param>
+        </member>
+        <member name="M:Myre.Pulser.Restart(System.Boolean,System.Boolean)">
+            <summary>
+            Restarts this pulser.
+            </summary>
+            <param name="initialState">if set to <c>true</c> IsSignalled will initially be <c>true</c>.</param>
+            <param name="resetDelay">if set to <c>true</c> the pulser will wait for the delay again before starting.</param>
+        </member>
+        <member name="M:Myre.Pulser.Update">
+            <summary>
+            Updates this instance.
+            </summary>
+        </member>
+        <member name="P:Myre.Pulser.PulserType">
+            <summary>
+            Gets or sets the type of the pulser.
+            </summary>
+            <value>The type of the pulser.</value>
+        </member>
+        <member name="P:Myre.Pulser.Frequency">
+            <summary>
+            Gets or sets the frequency.
+            This is the rate at which this instances pulses, after Delay has passed.
+            </summary>
+            <value>The frequency.</value>
+        </member>
+        <member name="P:Myre.Pulser.Delay">
+            <summary>
+            Gets or sets the delay.
+            This is the time after the pulsor is started or restarted, before it begins pulsing.
+            </summary>
+            <value>The delay.</value>
+        </member>
+        <member name="P:Myre.Pulser.IsSignalled">
+            <summary>
+            Gets or sets a value indicating whether this instance is signalled.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is signalled; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="E:Myre.Pulser.Signalled">
+            <summary>
+            Occurs when the pulsor is triggered.
+            </summary>
+        </member>
+        <member name="T:Myre.Extensions.GameTimeExtensions">
+            <summary>
+            A static class containing extension methods for the Microsoft.Xna.Framework.GameTime class.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.GameTimeExtensions.Seconds(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Gets the number of seconds elapsed since the last frame.
+            </summary>
+            <param name="t">The t.</param>
+            <returns>The number of seconds elapsed since the last frame.</returns>
+        </member>
+        <member name="M:Myre.Extensions.GameTimeExtensions.TotalSeconds(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Gets the total number of seconds elapsed since the game started.
+            </summary>
+            <param name="t">The t.</param>
+            <returns>The total number of seconds elapsed since the game started.</returns>
+        </member>
+        <member name="T:Myre.ICopyable">
+            <summary>
+            An object which can create copies of itself.
+            </summary>
+            <remarks>This is a replacement for the ICloneable interface, which does not exist in silverlight.</remarks>
+        </member>
+        <member name="T:Myre.Extensions.TypeExtensions">
+            <summary>
+            A static class containing extensions methods for the System.Type class.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.TypeExtensions.FindAttribute``1(System.Type)">
+            <summary>
+            Searches the Type for the specified attribute, and returns the first instance it finds; else returns null.
+            </summary>
+            <typeparam name="T">The type of attribute to earch for.</typeparam>
+            <param name="type">The type within which to search.</param>
+            <returns>The first instance of the attribute found; else null.</returns>
+        </member>
+        <member name="M:Myre.Extensions.TypeExtensions.CreateInstance(System.Type,System.Object[])">
+            <summary>
+            Creates an instance of this type.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myre.Extensions.TypeExtensions.CreateInstance(System.Type,System.Type[],System.Object[])">
+            <summary>
+            Creates an instance of this type.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Myre.Extensions.IListExtensions">
+            <summary>
+            A static class containing extension methods for the System.Collections.IList interface.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.IListExtensions.InsertionSort``1(System.Collections.Generic.IList{``0},System.Comparison{``0})">
+            <summary>
+            Sorts the list using intersion sort. This is usually slower than List.Sort and Array.Sort, but is stable.
+            Worst case O(n^2).
+            Best case O(n) (already sorted list).
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list">The list.</param>
+            <param name="comparison">The comparison.</param>
+        </member>
+        <member name="M:Myre.Extensions.IListExtensions.InsertionSort``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IComparer{``0})">
+            <summary>
+            Sorts the list using intersion sort. This is usually slower than List.Sort and Array.Sort, but is stable.
+            Worst case O(n^2).
+            Best case O(n) (already sorted list).
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list">The list.</param>
+            <param name="comparer">The comparer.</param>
+        </member>
+        <member name="T:Myre.Extensions.RectangleExtensions">
+            <summary>
+            A static class containing extension methods for the Microsoft.Xna.Framework.Rectangle struct.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.RectangleExtensions.Transform(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Matrix@)">
+            <summary>
+            Transformes the <see cref="T:Microsoft.Xna.Framework.Rectangle"/> with a specified <see cref="T:Microsoft.Xna.Framework.Matrix"/>.
+            </summary>
+            <param name="rect">The rectangle to transform.</param>
+            <param name="m">The matrix with which to do the transformation.</param>
+            <returns>The transformed rectangle.</returns>
+        </member>
+        <member name="T:Myre.Collections.ReadOnlyDictionary`2">
+            <summary>
+            a readonly wrapper around an IDictionary object
+            </summary>
+            <typeparam name="Key">The type of the key.</typeparam>
+            <typeparam name="Data">The type of the data.</typeparam>
+        </member>
+        <member name="M:Myre.Collections.ReadOnlyDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Collections.ReadOnlyDictionary`2"/> class.
+            </summary>
+            <param name="source">The backing collection to query</param>
+        </member>
+        <member name="M:Myre.Collections.ReadOnlyDictionary`2.ContainsKey(`0)">
+            <summary>
+            Determines whether the specified key is within the backing collection
+            </summary>
+            <param name="key">The key.</param>
+            <returns>
+            	<c>true</c> if the specified key is contained; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Myre.Collections.ReadOnlyDictionary`2.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Myre.Collections.ReadOnlyDictionary`2.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="P:Myre.Collections.ReadOnlyDictionary`2.Item(`0)">
+            <summary>
+            Gets the data assosciated with the specified key.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Myre.Collections.ReadOnlyDictionary`2.Count">
+            <summary>
+            Gets the count.
+            </summary>
+            <value>The count.</value>
+        </member>
+        <member name="P:Myre.Collections.ReadOnlyDictionary`2.Keys">
+            <summary>
+            Gets the keys.
+            </summary>
+            <value>The keys.</value>
+        </member>
+        <member name="P:Myre.Collections.ReadOnlyDictionary`2.Values">
+            <summary>
+            Gets the values.
+            </summary>
+            <value>The values.</value>
+        </member>
+        <member name="T:Myre.Collections.BinaryTree`1">
+            <summary>
+            A sorted binary tree
+            </summary>
+            <typeparam name="T">Type of item to store in the tree.</typeparam>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Collections.BinaryTree`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.Do(System.Action{`0})">
+            <summary>
+            Does the specified action on each value in the tree in order.
+            </summary>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.Add(`0)">
+            <summary>
+            Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.Clear">
+            <summary>
+            Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.Contains(`0)">
+            <summary>
+            Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
+            </summary>
+            <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            <returns>
+            true if <paramref name="item"/> is found in the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copies this binary treeto the specified array.
+            </summary>
+            <param name="array">The array.</param>
+            <param name="arrayIndex">Index of the array.</param>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.Remove(`0)">
+            <summary>
+            Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <param name="item">The object to remove from the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            <returns>
+            true if <paramref name="item"/> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false. This method also returns false if <paramref name="item"/> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </returns>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Myre.Collections.BinaryTree`1.ContainsAny(Myre.Collections.BinaryTree{`0})">
+            <summary>
+            Determines whether this instance contains any of the values which are in the specified binary tree.
+            </summary>
+            <param name="binaryTree">The binary tree.</param>
+            <returns>
+            	<c>true</c> if this instance contains any of the values which are in the specified binary tree; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="P:Myre.Collections.BinaryTree`1.Count">
+            <summary>
+            Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <value></value>
+            <returns>
+            The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </returns>
+        </member>
+        <member name="P:Myre.Collections.BinaryTree`1.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            </summary>
+            <value></value>
+            <returns>true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.
+            </returns>
+        </member>
+        <member name="T:Myre.Delayed">
+            <summary>
+            A static class containing methods for fire-and-forget delayed events and transitions.
+            </summary>
+        </member>
+        <member name="M:Myre.Delayed.Action(System.Action,System.Single)">
+            <summary>
+            Fires the spevified action after the specified number of seconds have elapsed.
+            </summary>
+            <param name="action">The delegate to execute.</param>
+            <param name="delay">The delay before the action is executed.</param>
+        </member>
+        <member name="M:Myre.Delayed.Transition(System.Action{System.Single},System.Single)">
+            <summary>
+            Calls the specified delegate every frame for the specified number of seconds.
+            </summary>
+            <param name="step">The method to call each frame. This method takes on float parameter which is the progress from 0 to 1.</param>
+            <param name="duration">The number of seconds to call the delegate for.</param>
+        </member>
+        <member name="M:Myre.Delayed.Transition(System.Action{System.Single},System.Single,System.Action)">
+            <summary>
+            Calls the specified delegate every frame for the specified number of seconds, and then calls the specified callback delegate.
+            </summary>
+            <param name="step">The method to call each frame. This method takes on float parameter which is the progress from 0 to 1.</param>
+            <param name="completionCallback">The method to call on completion of the transition.</param>
+            <param name="duration">The number of seconds to call the delegate for.</param>
+        </member>
+        <member name="M:Myre.Delayed.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Updates all transitions. This is called by MyreGame.Update(gameTime).
+            </summary>
+            <param name="gameTime"></param>
+        </member>
+        <member name="T:Myre.Collections.Box`1">
+            <summary>
+            A class which boxes a value.
+            </summary>
+            <typeparam name="T">The type of the value to box.</typeparam>
+        </member>
+        <member name="F:Myre.Collections.Box`1.Value">
+            <summary>
+            The value this box contains.
+            </summary>
+        </member>
+        <member name="P:Myre.Collections.Box`1.Myre#Collections#IBox#Value">
+            <summary>
+            Gets or sets the value this box contains.
+            </summary>
+            <value>The value this box contains.</value>
+        </member>
+        <member name="T:Myre.Collections.BoxedValueStore`1">
+            <summary>
+            A dictionary, mapping keys to boxed values.
+            </summary>
+            <typeparam name="Key">The type of the Key.</typeparam>
+        </member>
+        <member name="M:Myre.Collections.BoxedValueStore`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Collections.BoxedValueStore`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Myre.Collections.BoxedValueStore`1.Contains(`0)">
+            <summary>
+            Determines whether a value exists at the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <returns>
+            	<c>true</c> if [contains] [the specified key]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Myre.Collections.BoxedValueStore`1.TryGet``1(`0,Myre.Collections.Box{``0}@)">
+            <summary>
+            Tries the value at the sspecified key.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myre.Collections.BoxedValueStore`1.Get``1(`0,``0)">
+            <summary>
+            Gets the value at the specified key.
+            </summary>
+            <typeparam name="T">The type of value stored at the key.</typeparam>
+            <param name="key">The key.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns>The value at the specified key, or null if the existing box contains a different value type.</returns>
+        </member>
+        <member name="M:Myre.Collections.BoxedValueStore`1.Set``1(`0,``0)">
+            <summary>
+            Adds the specified value to this container.
+            </summary>
+            <typeparam name="T">The type of value to add.</typeparam>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns>The box containing the value at the specified key.</returns>
+        </member>
+        <member name="T:Myre.Extensions.BoundingBoxExtensions">
+            <summary>
+            A static class containing extension methods for the Microsoft.Xna.Framework.BoundingBox struct.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.BoundingBoxExtensions.Transform(Microsoft.Xna.Framework.BoundingBox,Microsoft.Xna.Framework.Matrix@)">
+            <summary>
+            Transformes the <see cref="T:Microsoft.Xna.Framework.BoundingBox"/> with a specified <see cref="T:Microsoft.Xna.Framework.Matrix"/>.
+            </summary>
+            <param name="box">The rectangle to transform.</param>
+            <param name="m">The matrix with which to do the transformation.</param>
+            <returns>The transformed <see cref="T:Microsoft.Xna.Framework.BoundingBox"/>.</returns>
+        </member>
+        <member name="T:Myre.IDisposableObject">
+            <summary>
+            An object that can report whether or not it is disposed.
+            </summary>
+        </member>
+        <member name="P:Myre.IDisposableObject.IsDisposed">
+            <summary>
+            Gets a value indicating whether this instance is disposed.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.KeysExtensions.IsCharacterKey(Microsoft.Xna.Framework.Input.Keys)">
+            <summary>
+            Determines if this key is used in basic character entry.
+            Includes a-z, 0-9 and arrow keys, among others.
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Myre.Extensions.IEnumerableExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.IEnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Executes an action for each item in the collection.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="collection">The collection.</param>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:Myre.Extensions.IEnumerableExtensions.Flatten``1(System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{``0}})">
+            <summary>
+            Returns each item in a collection of collections
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="collection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Myre.Extensions.IEnumerableExtensions.FirstOrDefaultValue``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <summary>
+            Returns the first value in the collection, or the given default
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="collection">The collection.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myre.Extensions.IEnumerableExtensions.Append``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            enumerates the start and then the end
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="start">The start.</param>
+            <param name="end">The end.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myre.Extensions.IEnumerableExtensions.Append``1(System.Collections.Generic.IEnumerable{``0},``0[])">
+            <summary>
+            Appends the given items onto this enumeration
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="start">The start.</param>
+            <param name="end">The end.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myre.Extensions.IEnumerableExtensions.ZipWithIndex``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Returns every element in the sequence with it's index in the sequence
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="enumerable">The enumerable.</param>
+            <param name="startIndex">The start index.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myre.Extensions.IEnumerableExtensions.ZipWithIndex``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns every element in the sequence with it's index in the sequence
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="enumerable">The enumerable.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Myre.Extensions.SurfaceFormatExtensions">
+            <summary>
+            A static class containing extension methods for the Microsoft.Xna.Framework.Graphics.SurfaceFormat enum.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.SurfaceFormatExtensions.IsFloatingPoint(Microsoft.Xna.Framework.Graphics.SurfaceFormat)">
+            <summary>
+            Determines whether the specified format is floating point.
+            </summary>
+            <param name="format">The format.</param>
+            <returns>
+            	<c>true</c> if the specified format is floating point; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Myre.Extensions.SurfaceFormatExtensions.FormatSize(Microsoft.Xna.Framework.Graphics.SurfaceFormat)">
+            <summary>
+            Gets the byte size of a render target format
+            </summary>
+            <param name="format">The format.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Myre.Extensions.SurfaceFormatExtensions.FormatSize(Microsoft.Xna.Framework.Graphics.DepthFormat)">
+            <summary>
+            Gets the byte size of a render target format
+            </summary>
+            <param name="format">The format.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Myre.Extensions.Int32Extensions">
+            <summary>
+            A static class containing extensions for the System.Int32 struct.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.Int32Extensions.ContainsBits(System.Int32,System.Int32)">
+            <summary>
+            Determines if this Int32 has all the bits set to true as there are in
+            the specified Int32.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.Int32Extensions.IsBitSet(System.Int32,System.Int32)">
+            <summary>
+            Determines if the specified bit is set to true in this Int32.
+            </summary>
+            <param name="n"></param>
+            <param name="bit">The number of </param>
+            <returns></returns>
+        </member>
+        <member name="T:Myre.Extensions.StringBuilderExtensions">
+            <summary>
+            A static class containing extension methods for the System.Text.StringBuilder class.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.StringBuilderExtensions.Clear(System.Text.StringBuilder)">
+            <summary>
+            Clears this instance.
+            </summary>
+            <param name="sb"></param>
+        </member>
+        <member name="M:Myre.Extensions.StringBuilderExtensions.Append(System.Text.StringBuilder,System.Text.StringBuilder)">
+            <summary>
+            Appends the specified spritebatch onto this instance.
+            </summary>
+            <param name="sb">The sb.</param>
+            <param name="stringBuilder">The string builder.</param>
+        </member>
+        <member name="M:Myre.Extensions.StringBuilderExtensions.Append(System.Text.StringBuilder,System.Text.StringBuilder,System.Int32,System.Int32)">
+            <summary>
+            Appends the specified spritebatch onto this instance.
+            </summary>
+            <param name="sb">The sb.</param>
+            <param name="stringBuilder">The string builder.</param>
+            <param name="start">The start index at which to copying.</param>
+            <param name="length">The number of characters to append..</param>
+        </member>
+        <member name="T:Myre.Extensions.IEnumeratorExtensions">
+            <summary>
+            A static class containing extension methods for the IEnumberable interface.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.IEnumeratorExtensions.AsEnumerable``1(System.Collections.Generic.IEnumerator{``0})">
+            <summary>
+            Converts this IEnumberator into an IEnumberable.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="enumerator">The enumerator.</param>
+            <returns>An IEnumerable which iterates over this IEnumerator.</returns>
+        </member>
+        <member name="T:Myre.Extensions.ColorExtensions">
+            <summary>
+            A static class containing extension methods for the Microsoft.Xna.Framework.Graphics.Color struct.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.ColorExtensions.Multiply(Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color)">
+            <summary>
+            Multiplies the the specified <see cref="T:Microsoft.Xna.Framework.Color"/> with this <see cref="T:Microsoft.Xna.Framework.Color"/>.
+            </summary>
+            <param name="a">A.</param>
+            <param name="colour">The colour.</param>
+            <returns>This <see cref="T:Microsoft.Xna.Framework.Color"/> multiplied with the specified <see cref="T:Microsoft.Xna.Framework.Color"/>.</returns>
+        </member>
+        <member name="M:Myre.Extensions.ColorExtensions.ToColour(System.String,Microsoft.Xna.Framework.Color@)">
+            <summary>
+            Parses this string into a Color.
+            </summary>
+            <param name="value"></param>
+            <param name="colour">The parsed colour.</param>
+            <returns>White if not found, the value otherwise</returns>
+        </member>
+        <member name="M:Myre.Extensions.ColorExtensions.FromRgb(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns>Null if not found, the value otherwise</returns>
+        </member>
+        <member name="M:Myre.Extensions.ColorExtensions.FromArgb(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns>Null if not found, the value otherwise</returns>
+        </member>
+        <member name="T:Myre.Extensions.BoundingSphereExtensions">
+            <summary>
+            A static class containing extension methods for the Microsoft.Xna.Framework.BoundingSphere struct.
+            </summary>
+        </member>
+        <member name="M:Myre.Extensions.BoundingSphereExtensions.Transform(Microsoft.Xna.Framework.BoundingSphere,Microsoft.Xna.Framework.Matrix@)">
+            <summary>
+            Transformes the <see cref="T:Microsoft.Xna.Framework.BoundingSphere"/> with a specified <see cref="T:Microsoft.Xna.Framework.Matrix"/>.
+            </summary>
+            <param name="sphere">The rectangle to transform.</param>
+            <param name="m">The matrix with which to do the transformation.</param>
+            <returns>The transformed <see cref="T:Microsoft.Xna.Framework.BoundingSphere"/>.</returns>
+        </member>
+        <member name="T:Myre.Collections.TypedWeakReference`1">
+            <summary>
+            A weak reference to a an object of a specific type. The item may still be garbage collected even while a weak reference is held.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Myre.Collections.TypedWeakReference`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Collections.TypedWeakReference`1"/> class.
+            </summary>
+            <param name="target">The target.</param>
+        </member>
+        <member name="M:Myre.Collections.TypedWeakReference`1.#ctor(`0,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Collections.TypedWeakReference`1"/> class.
+            </summary>
+            <param name="target">The target.</param>
+            <param name="trackResurrection">if set to <c>true</c> the object referenced by this weak reference is tracked after finalisation.</param>
+        </member>
+        <member name="P:Myre.Collections.TypedWeakReference`1.IsAlive">
+            <summary>
+            Gets a value indicating whether this instance is alive.
+            </summary>
+            <value><c>true</c> if this instance is alive; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Myre.Collections.TypedWeakReference`1.Target">
+            <summary>
+            Gets or sets the target.
+            </summary>
+            <value>The target.</value>
+        </member>
+        <member name="P:Myre.Collections.TypedWeakReference`1.TrackResurrection">
+            <summary>
+            Gets a value indicating whether the object referenced by this weak reference is tracked after finalisation.
+            </summary>
+            <value><c>true</c> if the object referenced by this weak reference is tracked after finalisation; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Myre.Collections.Pool`1">
+            <summary>
+            Maintains pool of class instances.
+            </summary>
+            <typeparam name="T">
+            The type of object to store. It must define a parameterless constructor, 
+            and may implement <see cref="!:IResetable"/>.</typeparam>
+        </member>
+        <member name="M:Myre.Collections.Pool`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Collections.Pool`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Myre.Collections.Pool`1.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Myre.Collections.Pool`1"/> class.
+            </summary>
+            <param name="initialCapacity">The initial number of elements contained within the <see cref="T:Myre.Collections.Pool`1"/>.</param>
+        </member>
+        <member name="M:Myre.Collections.Pool`1.Get">
+            <summary>
+            Gets an instance of <typeparamref name="T"/> from the <see cref="T:Myre.Collections.Pool`1"/>
+            </summary>
+            <returns>An instance of <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:Myre.Collections.Pool`1.Return(`0)">
+            <summary>
+            Returns the specified item to the <see cref="T:Myre.Collections.Pool`1"/>.
+            </summary>
+            <param name="item">The item to be returned.</param>
+        </member>
+        <member name="P:Myre.Collections.Pool`1.Instance">
+            <summary>
+            Gets the static instance.
+            </summary>
+            <value>The instance.</value>
+        </member>
+    </members>
+</doc>

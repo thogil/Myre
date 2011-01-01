@@ -33,17 +33,10 @@ namespace Myre.Procedural
             }
         }
 
-        private int capacity;
         public int Capacity
         {
-            get
-            {
-                return capacity;
-            }
-            set
-            {
-                capacity = value;
-            }
+            get;
+            set;
         }
 
         public readonly N SceneRoot;
@@ -63,16 +56,17 @@ namespace Myre.Procedural
         #endregion
 
         #region constructors
-        public Procedural(Scene scene, N root)
-            :this(scene, root, new SynchronousExecutor<N>())
+        public Procedural(Scene scene, N root, int capacity)
+            :this(scene, root, new SynchronousExecutor<N>(), capacity)
         {
         }
 
-        public Procedural(Scene scene, N root, ITaskExecutor executor)
+        public Procedural(Scene scene, N root, ITaskExecutor executor, int capacity)
         {
             this.executor = executor;
             this.nodes = new List<N>();
             this.Scene = scene;
+            this.Capacity = capacity;
 
             this.SceneRoot = root;
             nodes.Add(SceneRoot);
@@ -99,21 +93,27 @@ namespace Myre.Procedural
                 UnderCapacity();
             else if (nodes.Count > Capacity)
                 OverCapacity();
+            else
+                OnCapacity();
 
             executor.ApplyQueuedUpdates(Scene, this);
 
             base.Update(elapsedTime);
         }
 
+        private void OnCapacity()
+        {
+            throw new NotImplementedException();
+        }
+
         private void OverCapacity()
         {
-            if (executor.DiminishCount == 0)
+            for (int i = nodes.Count - 1; i >= 0; i--)
             {
-                for (int i = 0; i < nodes.Count && (executor.DiminishCount + nodes.Count) > Capacity; i++)
+                if (nodes[i].Developed && nodes[i].Children.Where(a => a.Developed).Count() == 0)
                 {
-                    var n = nodes[i];
-                    if (n.Developed && !executor.IsDiminishing(n))
-                        executor.QueueDiminish(n);
+                    executor.QueueDiminish(nodes[i]);
+                    break;
                 }
             }
         }

@@ -36,6 +36,9 @@ namespace Myre.Procedural
 
         public void QueueDiminish(N node)
         {
+            if (node.Children.Where(a => a.Developed).FirstOrDefault() != null)
+                throw new InvalidOperationException("Must diminish children first");
+
             diminishing.Add(node);
         }
 
@@ -52,6 +55,15 @@ namespace Myre.Procedural
                 foreach (var child in node.Children)
                     manager.AddNode(child);
             }
+            developing.Clear();
+
+            foreach (var node in diminishing)
+            {
+                foreach (var child in node.Children)
+                    manager.RemoveNode(child);
+                node.Diminish(scene);
+            }
+            diminishing.Clear();
         }
     }
 }

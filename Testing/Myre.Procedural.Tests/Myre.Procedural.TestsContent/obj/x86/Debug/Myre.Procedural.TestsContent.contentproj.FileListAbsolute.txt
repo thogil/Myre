@@ -1,0 +1,1 @@
+C:\Users\Martin\Documents\Visual Studio 2010\Projects\Myre\Testing\Myre.Procedural.Tests\Myre.Procedural.TestsContent\obj\x86\Debug\ResolveAssemblyReference.cache
